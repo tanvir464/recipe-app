@@ -1,0 +1,315 @@
+/* Define Color Variables */
+:root {
+    --primary-color: #296751;
+    --primary-dark: #215441;
+    --secondary-color: #d5fff6;
+    --text-color: #333;
+    --text-light: #888;
+}
+
+/* Global Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: var(--secondary-color);
+    font-family: Arial, sans-serif;
+}
+
+header, main, footer {
+    background-color: var(--secondary-color);
+}
+
+/* Header Styles */
+header {
+    padding: 20px 0;
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo {
+    flex: 1;
+}
+
+.search-container {
+    flex: 2;
+    padding: 0 20px; /* Add padding to align with logo and user menu */
+}
+
+.search-container form {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.search-container input[type="text"] {
+    flex-grow: 1;
+    width: auto;
+    height: 40px;
+    padding: 0 20px;
+    border: 2px solid var(--primary-color);
+    border-right: none;
+    border-radius: 50px 0 0 50px;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    font-size: 16px;
+    outline: none;
+}
+
+.search-container button[type="submit"] {
+    width: 60px;
+    height: 40px;
+    padding: 0;
+    border: 2px solid var(--primary-color);
+    border-left: none;
+    border-radius: 0 50px 50px 0;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* User Menu Styles */
+.user-menu {
+    flex: 1;
+    text-align: right;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.user-menu a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.user-menu img {
+    vertical-align: middle;
+}
+
+/* Navigation Styles */
+.main-nav {
+    background-color: var(--primary-color);
+    text-align: center;
+    margin-top: 10px;
+    position: relative;
+    top: 10px;
+}
+
+.main-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.main-nav ul li {
+    display: inline-block;
+}
+
+.main-nav ul li a {
+    display: block;
+    color: white;
+    padding: 10px 20px;
+    min-width: 120px;
+    text-decoration: none;
+}
+
+.main-nav ul li a:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Dropdown Menu Styles */
+.main-nav ul li.dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--primary-color);
+    min-width: 142px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.main-nav ul li.dropdown .dropdown-content li {
+    display: block;
+}
+
+/* Hover Effect to Show Dropdown */
+.main-nav ul li.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Main Content Styles */
+main {
+    margin: 0;
+    padding: 1px 0;
+}
+
+/* Recipe Card Styles */
+.card {
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-small {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--text-light);
+}
+
+.rating {
+    font-size: 14px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+/* Footer Styles */
+footer {
+    padding: 60px;
+    text-align: center;
+    margin: 0;
+}
+
+.social-media {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-media a {
+    text-decoration: none;
+}
+
+.social-media a .fa-circle {
+    color: var(--primary-color)
+}
+
+.social-media a .fa-stack-1x {
+    color: var(--secondary-color)
+}
+
+/* Quick links styling */
+footer .quick-links {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+footer .quick-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer .quick-links a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .header-row {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0;
+    }
+
+    .logo {
+        padding: 0 20px;
+    }
+
+    .user-menu {
+        order: 2;
+        align-self: flex-end;
+        margin-top: -48px;
+        padding-right: 20px;
+    }
+
+    .ls-link{
+        margin-top: 10px;
+        margin-bottom: 11px;
+    }
+
+    .search-container {
+        margin-top: 20px;
+        order: 3;
+        width: 100%;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+
+    .search-container form {
+        display: flex;
+        width: 100%;
+    }
+
+    .search-container input[type="text"] {
+        flex-grow: 1;
+        width: auto;
+        border-radius: 50px 0 0 50px;
+        min-width: 0
+    }
+
+    .search-container button[type="submit"] {
+        width: 60px;
+        border-radius: 0 50px 50px 0;
+        margin-left: 0;
+    }
+
+    .main-nav ul li a {
+        min-width: 45px;
+        padding: 10px 10px;
+    }
+
+    .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .col-lg-4, .col-md-6 {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .card-img-top {
+        height: auto;
+        max-width: 100%;
+    }
+
+    footer {
+        padding: 40px;
+        text-align: center;
+    }
+
+    .social-media {
+        gap: 5px;
+    }
+}

@@ -1,0 +1,48 @@
+body {
+    background-color: #d5fff6;
+    font-family: Arial, sans-serif;
+}
+
+.card {
+    width: 100%;
+    max-width: 500px;
+    border: none;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    margin-bottom: 20px;
+}
+
+form .form-label {
+    font-size: 14px;
+    color: #333;
+}
+
+form {
+    width: 100%;
+}
+
+form input, form textarea {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #296751;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #215441;
+}
+
+.btn-primary:active {
+    background-color: #215441;
+}
+
+.container {
+    max-width: 350px;
+}

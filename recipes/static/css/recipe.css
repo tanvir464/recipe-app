@@ -1,0 +1,169 @@
+/* General Container Padding */
+.container {
+    padding-left: 150px;
+    padding-right: 150px;
+}
+
+/* Profile Info Styles */
+.profile-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.upload-date {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.recipe-image img {
+    width: 100%;
+    max-height: 400px;
+    max-width: 800px;
+    width: auto;
+    margin: 15px 0;
+    border-radius: 8px;
+}
+
+/* Recipe Content Styles */
+.recipe-content img {
+    width: 100%;
+    max-height: 400px;
+    max-width: 800px;
+    width: auto;
+    margin: 15px 0;
+    border-radius: 8px;
+}
+
+.p-text {
+    margin: 15px 0;
+    line-height: 1.6;
+}
+
+/* Rating Styles */
+.rating {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.rating .fa-star {
+    cursor: pointer;
+}
+
+.rating .fa-star.filled {
+    color: var(--primary-color);
+}
+
+/* Comment Section Styles */
+.comment-section {
+    margin-top: 30px;
+    padding: 10px;
+}
+
+.comment-section h5 {
+    color: var(--primary-dark);
+}
+
+.comment-section input, 
+.comment-section textarea {
+    margin-bottom: 10px;
+}
+
+/* Button Styles */
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+    background-color: var(--primary-dark) !important;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+.btn-secondary:hover,
+.btn-secondary:active {
+    background-color: #5a6268 !important;
+}
+
+
+/* Individual Comment Styles */
+.comment-profile-pic {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.comment-input {
+    width: 900px;
+}
+
+.delete-comment {
+    color: var(--primary-color);
+}
+
+.reply-link {
+    color: var(--primary-color);
+}
+
+.fas {
+    color: var(--primary-color);
+}
+
+.comment-content {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 10px 15px;
+    width: 800px;
+}
+
+.reactions {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: var(--primary-color);
+}
+
+.reaction i {
+    color: #6c757d;
+    cursor: pointer;
+}
+
+.reaction.loved i.fa-heart {
+    color: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .recipe-image img,
+    .recipe-content img {
+        max-height: 280px;
+        max-width: 300px;
+        width: auto;
+    }
+
+    .user-info {
+        font-size: 15px;
+        max-width: 300px;
+    }
+
+    .comment-input {
+        width: 100%;
+    }
+}

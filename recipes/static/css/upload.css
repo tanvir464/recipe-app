@@ -1,0 +1,56 @@
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.content-section {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    position: relative;
+}
+
+.remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #dc3545;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 1;
+    text-align: center;
+    padding: 0;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.remove-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+#addTextBtn, #addImageBtn {
+    min-width: 150px;
+}
+
+textarea.form-control {
+    resize: vertical;
+}
+
+/* Increased Padding */
+.container {
+    padding-left: 20rem;
+    padding-right: 20rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

@@ -1,0 +1,46 @@
+/* Custom Profile Page Styles */
+.profile-header {
+    background-color: var(--primary-dark);
+}
+
+.main-profile-pic {
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+}
+
+.profile-body .card {
+    border: none;
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.card-title {
+    color: var(--text-light);
+}
+
+.card-text {
+    color: var(--text-light);
+}
+
+/* Bio Styles */
+.profile-body h2 {
+    color: var(--primary-color);
+}
+
+.profile-body p {
+    color: var(--text-color);
+}
+
+/* Increased Padding */
+.container {
+    padding-left: 20rem;
+    padding-right: 20rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

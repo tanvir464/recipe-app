@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ user.username }}'s Followers{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="mb-5"><b>Followers of {{ user.username }}:</b></h2>
+        <div class="row">
+            {% for follower in followers %}
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <a href="{% url 'user_profile' follower.username %}" class="text-decoration-none text-dark">
+                        <div class="card">
+                            <img src="{{ follower.profile_picture.url }}" class="card-img-top" alt="{{ follower.username }}">
+                            <div class="card-body">
+                                <h5 class="card-title"><b>{{ follower.username }}</b></h5>
+                                <p class="text-muted">{{ follower.first_name|default:"User" }} {{ follower.last_name}}</p>
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-small text-muted">
+                                        <i class="fa-solid fa-user-friends"></i> <span class="ms-1">{{ follower.follower_count }} Followers</span>
+                                    </p>
+                                    <p class="text-small text-muted">
+                                        <i class="fa-solid fa-user-plus"></i> <span class="ms-1">{{ follower.following_count }} Following</span>
+                                    </p>
+                                    <p class="text-small text-muted">
+                                        <i class="fa-solid fa-utensils"></i> <span class="ms-1">{{ follower.recipe_count }} Recipes</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% empty %}
+                <p>{{ user.username }} has no followers yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

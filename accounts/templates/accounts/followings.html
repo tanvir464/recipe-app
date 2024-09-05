@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ user.username }}'s Followings{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="mb-5"><b>Followings of {{ user.username }}:</b></h2>
+        <div class="row">
+            {% for following in followings %}
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <a href="{% url 'user_profile' following.username %}" class="text-decoration-none text-dark">
+                        <div class="card">
+                            <img src="{{ following.profile_picture.url }}" class="card-img-top" alt="{{ following.username }}">
+                            <div class="card-body">
+                                <h5 class="card-title"><b>{{ following.username }}</b></h5>
+                                <p class="text-muted">{{ following.first_name|default:"User" }} {{ following.last_name}}</p>
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-small text-muted">
+                                        <i class="fa-solid fa-user-friends"></i> <span class="ms-1">{{ following.follower_count }} followers</span>
+                                    </p>
+                                    <p class="text-small text-muted">
+                                        <i class="fa-solid fa-user-plus"></i> <span class="ms-1">{{ following.following_count }} Following</span>
+                                    </p>
+                                    <p class="text-small text-muted">
+                                        <i class="fa-solid fa-utensils"></i> <span class="ms-1">{{ following.recipe_count }} Recipes</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% empty %}
+                <p>{{ user.username }} has no followings yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

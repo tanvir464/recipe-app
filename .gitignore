@@ -1,0 +1,7 @@
+db.sqlite3
+.env
+__pycache__/
+media/profile_pics/*
+media/recipe_card_images/*
+media/recipe_images/*
+!media/profile_pics/default.jpg

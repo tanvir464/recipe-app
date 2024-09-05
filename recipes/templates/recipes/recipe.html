@@ -1,0 +1,176 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ recipe.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/recipe.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mb-5">
+    <!-- Profile Info and Recipe Image -->
+    <div class="profile-info d-flex align-items-center">
+        <a href="{% url 'user_profile' recipe.uploader.username %}">
+            <img src="{{ recipe.uploader.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle profile-pic">
+        </a>
+        <div class="user-info ms-3">
+            <h5 class="mb-1 mt-4">
+                <a href="{% url 'user_profile' recipe.uploader.username %}" class="text-decoration-none text-dark">
+                    <b>{{ recipe.uploader.username }}</b>
+                </a>
+            </h5>
+            <p class="upload-date">Uploaded on {{ recipe.upload_date|date:"F d, Y" }}</p>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0"><b>{{ recipe.title }}</b></h2>
+        {% if request.user == recipe.uploader %}
+        <form action="{% url 'delete_recipe' recipe.id %}" method="POST" onsubmit="return confirm('Are you sure you want to delete this recipe?');">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-link text-dark p-0">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </form>
+        {% endif %}
+    </div>
+    
+    <div class="recipe-image mb-4">
+        <img src="{{ recipe.card_image.url }}" alt="{{ recipe.title }}" class="img-fluid">
+    </div>
+
+    <!-- Recipe Instructions -->
+    <h3 class="mb-3"><b>Instructions:</b></h3>
+    {% for content in contents %}
+        <div class="recipe-content mb-3">
+            {% if content.content_type == 'image' %}
+                <img src="{{ content.image_content.url }}" alt="Recipe Image" class="img-fluid">
+            {% else %}
+                <p>{{ content.text_content }}</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <!-- Rating Section -->
+    {% if user.is_authenticated %}
+    <div class="rating mt-5">
+        <h5 class="mb-3"><b>Your Rating:</b></h5>
+        {% for i in "12345" %}
+            <span class="user-star {% if i|add:0 <= user_rating %}fas{% else %}far{% endif %} fa-star" data-value="{{ i }}"></span>
+        {% endfor %}
+        <span id="avg-rating" class="ml-3"><b>Avg: {{ recipe.rating|floatformat:1 }}/5 ({{ recipe.rating_count }})</b></span>
+        <button id="cancel-rating" class="btn btn-sm btn-danger ml-3" style="display: none;">Cancel Rating</button>
+    </div>
+    {% else %}
+    <p class="text-muted mt-3">Login to rate this recipe.</p>
+    {% endif %}
+
+    <!-- Comment Section -->
+    <div class="comment-section mt-5">
+        <h5><b>Comments:</b></h5>
+
+        {% if user.is_authenticated %}
+        <form action="{% url 'add_comment' recipe.id %}" method="POST" id="comment-form">
+            {% csrf_token %}
+            <div class="comment-input mt-3 mb-3">
+                <textarea class="form-control" name="comment" rows="4" placeholder="Write your comment here"></textarea>
+            </div>
+            <div class="form-buttons mb-5">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        {% else %}
+        <p class="text-muted mt-3">Login to leave a comment.</p>
+        {% endif %}
+
+        <!-- Display Comments -->
+        {% for comment in comments %}
+        <div class="comment d-flex align-items-start mb-4">
+            <img src="{% if comment.user.profile_picture %}{{ comment.user.profile_picture.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}" alt="{{ comment.user.username }}" class="rounded-circle comment-profile-pic">
+            <div class="comment-content ms-3 position-relative">
+                <div class="d-flex align-items-center justify-content-between">
+                    <p class="mb-3"><b>{{ comment.user.username }}</b></p>
+                    <div class="d-flex align-items-center">
+                        <span class="text-muted small me-3">{{ comment.created_at|date:"M d, Y" }}</span>
+                        {% if user == comment.user %}
+                            <a href="javascript:void(0);" class="delete-comment" data-comment-id="{{ comment.id }}">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>                    
+                <p>{{ comment.text }}</p>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="reactions mb-2">
+                        {% if user.is_authenticated %}
+                        <span class="reaction {% if user in comment.reacted_by.all %}loved{% endif %}" data-type="comment" data-id="{{ comment.id }}">
+                            <i class="fas fa-heart"></i> <span class="reaction-count">{{ comment.reacted_by.count }}</span>
+                        </span>
+                        {% endif %}
+                    </div>
+                    {% if user.is_authenticated %}
+                    <div>
+                        <a href="javascript:void(0);" class="reply-link" data-comment-id="{{ comment.id }}">Reply</a>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="reply-form-container" id="reply-form-container-{{ comment.id }}"></div>
+            </div>
+        </div>
+
+        <!-- Display Replies -->
+        <div class="replies ms-5">
+            {% for reply in comment.comment_replies.all %}
+            <div class="reply d-flex align-items-start mb-4" data-parent-id="{{ comment.id }}">
+                <img src="{{ reply.user.profile_picture.url }}" alt="{{ reply.user.username }}" class="rounded-circle comment-profile-pic">
+                <div class="comment-content ms-3 position-relative">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <p class="mb-3"><b>{{ reply.user.username }}</b></p>
+                        <div class="d-flex align-items-center">
+                            <span class="text-muted small me-3">{{ reply.created_at|date:"M d, Y" }}</span>
+                            {% if user == reply.user %}
+                                <a href="javascript:void(0);" class="delete-reply" data-reply-id="{{ reply.id }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <p>{{ reply.text }}</p>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="reactions mb-2">
+                            {% if user.is_authenticated %}
+                            <span class="reaction {% if user in reply.reacted_by.all %}loved{% endif %}" data-type="reply" data-id="{{ reply.id }}">
+                                <i class="fas fa-heart"></i> <span class="reaction-count">{{ reply.reacted_by.count }}</span>
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Hidden form template for replies -->
+<template id="reply-form-template">
+    <form action="{% url 'add_comment' recipe.id %}" method="POST" class="reply-form mt-3">
+        {% csrf_token %}
+        <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+        <input type="hidden" name="parent_id" value="">
+        <div class="mb-3">
+            <textarea class="form-control" name="comment" rows="4" placeholder="Write your reply here"></textarea>
+        </div>
+        <div class="form-buttons mb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</template>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/recipe.js' %}"></script>
+{% endblock %}
