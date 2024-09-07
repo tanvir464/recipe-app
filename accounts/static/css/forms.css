@@ -31,16 +31,32 @@ form input, form textarea {
 }
 
 .btn-primary {
-    background-color: #296751;
+    background-color: #296751 !important;
     border: none;
 }
 
 .btn-primary:hover {
-    background-color: #215441;
+    background-color: #215441 !important;
 }
 
 .btn-primary:active {
-    background-color: #215441;
+    background-color: #215441 !important;
+}
+
+.btn-outline-primary {
+    color: #296751 !important;
+    border-color: #296751 !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #296751 !important;
+    border-color: #296751 !important;
+    color: #fff !important;
+}
+
+.btn-outline-primary:active {
+    background-color: #296751 !important;
+    border-color: #296751 !important;
 }
 
 .container {

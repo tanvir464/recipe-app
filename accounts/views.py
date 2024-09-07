@@ -11,6 +11,8 @@ from django.contrib.auth import update_session_auth_hash
 import pyotp
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth import password_validation
+from django.core.exceptions import ValidationError
 
 def login_user(request):
     if request.method == "POST":
@@ -105,11 +107,10 @@ def forgot_password(request):
             messages.error(request, "No user found with this email.")
             return redirect('forgot_password')
 
-        otp = generate_otp()  # Use the same OTP generation method
+        otp = generate_otp()
         request.session['otp'] = otp
         request.session['reset_user_id'] = user.id
 
-        # Send OTP to the user's email
         send_mail(
             'Password Reset OTP',
             f'Your OTP for password reset is {otp}. It is valid for 5 minutes.',
@@ -137,8 +138,21 @@ def verify_reset_otp(request):
 
 def reset_password(request):
     if request.method == "POST":
-        new_password = request.POST.get('password')
+        new_password = request.POST.get('password1')
+        confirm_password = request.POST.get('password2')
         reset_user_id = request.session.get('reset_user_id')
+
+        if new_password != confirm_password:
+            messages.success(request, "Passwords do not match. Please try again.")
+            return redirect('reset_password')
+
+        try:
+            password_validation.validate_password(new_password, user=None)
+
+        except ValidationError as e:
+            for error in e.messages:
+                messages.success(request, error)
+            return redirect('reset_password')
 
         if reset_user_id:
             user = CustomUser.objects.get(id=reset_user_id)
