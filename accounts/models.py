@@ -5,6 +5,7 @@ from django.conf import settings
 from PIL import Image
 
 class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True, blank=False, null=False)
     bio = models.TextField(max_length=2000, blank=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', default='profile_pics/default.jpg')
     follower_count = models.IntegerField(default=0)

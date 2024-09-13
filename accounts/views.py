@@ -26,7 +26,7 @@ def login_user(request):
             messages.error(request, "Invalid username or password. Please try again.")
             return redirect('login')
     else:
-        return render(request, 'accounts/login.html', {})
+        return render(request, 'accounts/login.html')
 
 def logout_user(request):
     logout(request)
@@ -129,6 +129,8 @@ def verify_reset_otp(request):
         session_otp = request.session.get('otp')
 
         if user_otp == session_otp:
+            request.session['otp_verified'] = True
+            del request.session['otp']
             return redirect('reset_password')
         else:
             messages.error(request, "Invalid OTP. Please try again.")
@@ -137,6 +139,10 @@ def verify_reset_otp(request):
     return render(request, 'accounts/otp.html')
 
 def reset_password(request):
+    if not request.session.get('otp_verified'):
+        messages.error(request, "You need to verify email with OTP first.")
+        return redirect('forgot_password')
+    
     if request.method == "POST":
         new_password = request.POST.get('password1')
         confirm_password = request.POST.get('password2')
@@ -162,6 +168,7 @@ def reset_password(request):
             messages.success(request, "Password reset successful! You can now log in.")
             return redirect('login')
 
+    request.session['otp_verified'] = False
     return render(request, 'accounts/resetpassword.html')
 
 @login_required
@@ -212,6 +219,9 @@ def follow_user(request, username):
 
         request.user.save()
         target_user.save()
+    
+    else:
+        messages.success(request, 'Log in to follow!', extra_tags='alert-dismissible fade show')
 
     return redirect('user_profile', username=username)
 
