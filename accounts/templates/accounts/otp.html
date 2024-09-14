@@ -26,9 +26,13 @@
     <div class="mb-3">
         <input type="text" class="form-control" name="otp" placeholder="Enter OTP" required>
     </div>
+    <div class="mt-3 text-end">
+        <p>Don't have OTP? <a href="{% url 'forgot_password' %}" class="link-primary">Generate</a></p>
+    </div>
     <button type="submit" class="btn btn-primary w-100">Verify OTP</button>
 </form>
 
     </div>
 </div>
+
 {% endblock %}

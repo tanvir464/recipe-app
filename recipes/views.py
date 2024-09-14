@@ -15,7 +15,7 @@ from django.conf import settings
 def upload_recipe(request):
     if not request.user.is_authenticated:
         messages.warning(request, 'Please log in first to upload a recipe.', extra_tags='alert-dismissible fade show')
-        return redirect(reverse('index'))
+        return redirect(reverse('login'))
 
     if request.method == 'POST':
         title = request.POST.get('title')
